@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  web:
+    build:  ./project
+    command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
+    volumes:
+      - ./project:/usr/src/app
+    ports:
+      - 8004:8000
+    environment:
+      ENV: dev
+      TESTING: 0
+      DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-password}@postgres:5432/web_dev
+      DATABASE_TEST_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-password}@postgres:5432/web_test
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:14.1
+    container_name: web-db
+    ports:
+      - 5432:5432
+    volumes:
+      - ./project/db/create.sql:/docker-entrypoint-initdb.d/create.sql
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
