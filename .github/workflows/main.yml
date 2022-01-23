@@ -28,4 +28,4 @@ jobs:
           file: ./project/Dockerfile.prod
           platforms: linux/amd64
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/fastapi-tdd:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/fastapi-tdd
