@@ -13,4 +13,3 @@ class TextSummary(models.Model):
 
 
 SummarySchema = pydantic_model_creator(TextSummary)
-

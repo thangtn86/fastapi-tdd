@@ -7,7 +7,7 @@ from app.models.tortoise import TextSummary
 async def post(payload: SummaryPayloadSchema) -> int:
     summary = TextSummary(
         url=payload.url,
-        summary='dummy summary',
+        summary="dummy summary",
     )
     await summary.save()
     return summary.id
@@ -20,7 +20,7 @@ async def get(id: int) -> Union[dict, None]:
 
     return None
 
+
 async def get_all() -> List:
     summaries = await TextSummary.all().values()
     return summaries
-
