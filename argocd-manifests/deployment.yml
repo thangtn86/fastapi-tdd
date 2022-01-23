@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: fastapi-tdd
+  name: fastapi-tdd
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fastapi-tdd
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: fastapi-tdd
+    spec:
+      containers:
+      - image: nthang1905/fastapi-tdd:latest
+        imagePullPolicy: IfNotPresent
+        name: fastapi-tdd
+        resources:
+          requests:
+            cpu: 50m
+            memory: 256Mi
